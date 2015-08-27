@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+ <!-- this tell Angular to run -->
+<head>
+    <title>Angular + WebAPI</title>
+
+    <script src="./Scripts/jquery.js"></script>
+    <script src="./Scripts/angular.js"></script>
+    <script src="./Scripts/angular-ui-router.js"></script>
+
+    <script src="./App/app.js"></script>
+    <script src="./App/controllers.js"></script>
+
+    <script src="./Scripts/bootstrap.js"></script>
+
+    <link rel="stylesheet" href="./Style/CSS/bootstrap.css" />
+    <link rel="stylesheet" href="./Style/CSS/style.css" />
+
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#/">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="#/movies">
+                        Movies
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!--
+            Note the below ui-view attribute, not the id.
+            The content of the div will be replaces by
+            the view that is stated inside app.js
+        -->
+        <div id="ui-view" ui-view>
+        </div>
+    </div>
+</body>
+</html>

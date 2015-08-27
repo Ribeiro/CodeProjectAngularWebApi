@@ -1,0 +1,30 @@
+﻿<div class="row">
+    <h2>Movies</h2>
+</div>
+
+<div class="row">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Director</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- foreach movie, a new tr will be created -->
+            <tr ng-repeat="movie in movies">
+                <!-- Similar to a foreach loop, C#: foreach(var movie in movies ){...} -->
+                <td>
+                    {{movie.Id}}
+                </td>
+                <td>
+                    {{movie.Name}}
+                </td>
+                <td>
+                    {{movie.Director}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
