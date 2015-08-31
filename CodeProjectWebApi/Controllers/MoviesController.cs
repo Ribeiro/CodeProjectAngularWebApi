@@ -1,9 +1,11 @@
 ﻿using CodeProjectWebApi.DTO;
+using EdgeJs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace CodeProjectWebApi.Controllers
@@ -11,7 +13,7 @@ namespace CodeProjectWebApi.Controllers
     public class MoviesController : ApiController
     {
 
-        public IEnumerable<MoviesDTO> Get()
+        public async Task<IEnumerable<MoviesDTO>> Get()
         {
             // this list should be fetched from the DB
             // you can use Entity Framework (EF)
@@ -25,6 +27,49 @@ namespace CodeProjectWebApi.Controllers
             new MoviesDTO { Id = 3, Name = "Dancer in the Dark", Director = "Lars von Trier" },
             new MoviesDTO { Id = 4, Name = "WebAPI", Director = "Cool!" }
         };
+
+            try
+            {
+
+                /*var createHttpServer = Edge.Func(@"
+        var http = require('http');
+
+        return function (port, cb) {
+            http.createServer(function (req, res) {
+                res.end('Hello, world! ' + new Date());
+            }).listen(port, cb);
+        };
+    ");
+
+                await createHttpServer(8080);*/
+
+                var func = Edge.Func(@"
+                                        var request = require('request');
+
+                                        return function (url, cb) {
+                                            request(url, function (error, response, body) {
+                                                    if (!error && response.statusCode == 200) {
+                                                        cb(body);
+                                                    }else {
+                                                        cb(error);
+                                                    }
+                                            });
+
+                                        };
+                                    ");
+
+                var result = await func("http://www.modulus.io");
+
+                var test = "";
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            
+            
 
             return movies;
         }
