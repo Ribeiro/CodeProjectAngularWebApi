@@ -58,9 +58,9 @@ namespace CodeProjectWebApi.Controllers
                                         return function (url, callback) {
                                             request(url, function (error, response, body) {
                                                     if (!error && response.statusCode == 200) {
-                                                        return callback(null,[{'Id':1,'Name':'Fight Club','Director':'David Fincher'},{'Id':2,'Name':'Into The Wild','Director':'Sean Penn'},{'Id':3,'Name':'Dancer in the Dark','Director':'Lars von Trier'},{'Id':4,'Name':'WebAPI','Director':'Cool!'}]);
+                                                        callback(null,[{'Id':1,'Name':'Fight Club','Director':'David Fincher'},{'Id':2,'Name':'Into The Wild','Director':'Sean Penn'},{'Id':3,'Name':'Dancer in the Dark','Director':'Lars von Trier'},{'Id':4,'Name':'WebAPI','Director':'Cool!'}]);
                                                     }else {
-                                                        return callback(error);
+                                                        callback(error);
                                                     }
                                             });
 
