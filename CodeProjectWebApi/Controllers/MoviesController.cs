@@ -13,65 +13,74 @@ namespace CodeProjectWebApi.Controllers
     public class MoviesController : ApiController
     {
 
-        public async Task<IEnumerable<MoviesDTO>> Get()
+        public async Task<Object> Get()
         {
             // this list should be fetched from the DB
             // you can use Entity Framework (EF)
             // for best practice, do not use EF inside the controller.
             // Instead use EF inside a class that implements an interface
 
-            List<MoviesDTO> movies = new List<MoviesDTO>
-        {
-            new MoviesDTO { Id = 1, Name = "Fight Club", Director = "David Fincher" },
-            new MoviesDTO { Id = 2, Name = "Into The Wild", Director = "Sean Penn" },
-            new MoviesDTO { Id = 3, Name = "Dancer in the Dark", Director = "Lars von Trier" },
-            new MoviesDTO { Id = 4, Name = "WebAPI", Director = "Cool!" }
-        };
+            /*var createHttpServer = Edge.Func(@"
+      var http = require('http');
 
-            try
-            {
+      return function (port, cb) {
+          http.createServer(function (req, res) {
+              res.end('Hello, world! ' + new Date());
+          }).listen(port, cb);
+      };
+  ");
 
-                /*var createHttpServer = Edge.Func(@"
-        var http = require('http');
+              await createHttpServer(8080);*/
+                          
+            //try
+            //{
 
-        return function (port, cb) {
-            http.createServer(function (req, res) {
-                res.end('Hello, world! ' + new Date());
-            }).listen(port, cb);
-        };
-    ");
+              
 
-                await createHttpServer(8080);*/
-
-                var func = Edge.Func(@"
+                /*var func = Edge.Func(@"
                                         var request = require('request');
 
                                         return function (url, cb) {
                                             request(url, function (error, response, body) {
                                                     if (!error && response.statusCode == 200) {
-                                                        cb(body);
+                                                        cb([{'Id':1,'Name':'Fight Club','Director':'David Fincher'},{'Id':2,'Name':'Into The Wild','Director':'Sean Penn'},{'Id':3,'Name':'Dancer in the Dark','Director':'Lars von Trier'},{'Id':4,'Name':'WebAPI','Director':'Cool!'}]);
                                                     }else {
                                                         cb(error);
                                                     }
                                             });
 
                                         };
+                                    ");*/
+
+            var func = Edge.Func(@"
+                                        var request = require('request');
+
+                                        return function (url, callback) {
+                                            request(url, function (error, response, body) {
+                                                    if (!error && response.statusCode == 200) {
+                                                        return callback(null,[{'Id':1,'Name':'Fight Club','Director':'David Fincher'},{'Id':2,'Name':'Into The Wild','Director':'Sean Penn'},{'Id':3,'Name':'Dancer in the Dark','Director':'Lars von Trier'},{'Id':4,'Name':'WebAPI','Director':'Cool!'}]);
+                                                    }else {
+                                                        return callback(error);
+                                                    }
+                                            });
+
+                                        };
                                     ");
 
-                var result = await func("http://www.modulus.io");
+            var result = await func("http://www.modulus.io");
 
-                var test = "";
+            return result as object;
 
 
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            
-            
+            //}
+            //catch (Exception e)
+            //{
+            //Console.WriteLine(e.Message);
+            //}
 
-            return movies;
+            //return movies;
+
+
         }
 
     }
