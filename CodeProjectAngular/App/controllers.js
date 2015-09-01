@@ -11,7 +11,7 @@ angular.module('app.controllers', [])
        $scope.movies = data;
     })
     .error(function (data) {
-        alert("Http Request Failed!!!  =(");
+        alert("Http Request Failed =(  " + data.Message);
     });
     
 });

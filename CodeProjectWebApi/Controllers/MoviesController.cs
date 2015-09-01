@@ -12,46 +12,25 @@ namespace CodeProjectWebApi.Controllers
 {
     public class MoviesController : ApiController
     {
-
+        
         public async Task<Object> Get()
         {
-            // this list should be fetched from the DB
-            // you can use Entity Framework (EF)
-            // for best practice, do not use EF inside the controller.
-            // Instead use EF inside a class that implements an interface
 
-            /*var createHttpServer = Edge.Func(@"
-      var http = require('http');
+            /* Example - Creating node.js http server per request just for fun  =)
+                     var createHttpServer = Edge.Func(@"
+                                                          var http = require('http');
 
-      return function (port, cb) {
-          http.createServer(function (req, res) {
-              res.end('Hello, world! ' + new Date());
-          }).listen(port, cb);
-      };
-  ");
+                                                          return function (port, cb) {
+                                                              http.createServer(function (req, res) {
+                                                                  res.end('Hello, world! ' + new Date());
+                                                              }).listen(port, cb);
+                                                          };
+                                                     ");
 
-              await createHttpServer(8080);*/
-                          
-            //try
-            //{
+                     await createHttpServer(8080);
+             */
 
-              
-
-                /*var func = Edge.Func(@"
-                                        var request = require('request');
-
-                                        return function (url, cb) {
-                                            request(url, function (error, response, body) {
-                                                    if (!error && response.statusCode == 200) {
-                                                        cb([{'Id':1,'Name':'Fight Club','Director':'David Fincher'},{'Id':2,'Name':'Into The Wild','Director':'Sean Penn'},{'Id':3,'Name':'Dancer in the Dark','Director':'Lars von Trier'},{'Id':4,'Name':'WebAPI','Director':'Cool!'}]);
-                                                    }else {
-                                                        cb(error);
-                                                    }
-                                            });
-
-                                        };
-                                    ");*/
-
+            /* Example - Initiating an async request to another domain using Node.js  =) */
             var func = Edge.Func(@"
                                         var request = require('request');
 
@@ -67,19 +46,25 @@ namespace CodeProjectWebApi.Controllers
                                         };
                                     ");
 
-            var result = await func("http://www.modulus.io");
+            dynamic result;
+
+            try
+            {
+                result = await func("http://www.casadotambemnamora.com.br");
+
+                if (null == result)
+                {
+                    throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "The service is unreachable!"));
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "The service is unreachable!"));
+            }
+            
 
             return result as object;
-
-
-            //}
-            //catch (Exception e)
-            //{
-            //Console.WriteLine(e.Message);
-            //}
-
-            //return movies;
-
 
         }
 
