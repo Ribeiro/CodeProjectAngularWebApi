@@ -50,7 +50,7 @@ namespace CodeProjectWebApi.Controllers
 
             try
             {
-                result = await func("http://www.casadotambemnamora.com.br");
+                result = await func("http://www.google.com.br");
 
                 if (null == result)
                 {
