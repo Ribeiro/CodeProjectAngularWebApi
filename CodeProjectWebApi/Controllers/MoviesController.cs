@@ -12,7 +12,9 @@ namespace CodeProjectWebApi.Controllers
 {
     public class MoviesController : ApiController
     {
-        
+
+        private const string Message = "The service is unreachable!";
+
         public async Task<Object> Get()
         {
 
@@ -54,13 +56,13 @@ namespace CodeProjectWebApi.Controllers
 
                 if (null == result)
                 {
-                    throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "The service is unreachable!"));
+                    throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, Message));
                 }
 
             }
             catch (Exception e)
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "The service is unreachable!"));
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, Message));
             }
             
 
